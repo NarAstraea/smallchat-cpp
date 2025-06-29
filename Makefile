@@ -1,0 +1,43 @@
+CXX = g++
+CXXFLAGS = -O2 -Wall -Wextra -std=c++17
+SRCDIR = .
+BUILDDIR = build
+TARGET_S = $(BUILDDIR)/smallchat-server
+TARGET_C = $(BUILDDIR)/smallchat-client
+LDFLAGS = -lboost_system -lboost_thread -lboost_chrono
+SRCS = $(wildcard $(SRCDIR)/*.cpp)
+SRCS_S = $(filter-out $(SRCDIR)/smallchat-client.cpp, $(SRCS))
+SRCS_C = $(filter-out $(SRCDIR)/smallchat-server.cpp, $(SRCS))
+OBJS_S = $(patsubst $(SRCDIR)/%.cpp, $(BUILDDIR)/%.o, $(SRCS_S))
+OBJS_C = $(patsubst $(SRCDIR)/%.cpp, $(BUILDDIR)/%.o, $(SRCS_C))
+
+$(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
+	@mkdir -p $(BUILDDIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+.PHONY:clean smallchat-server
+smallchat-server:$(TARGET_S)
+
+$(TARGET_S): $(OBJS_S)
+	$(CXX) $(OBJS_S) -o $@ $(LDFLAGS)
+
+.PHONY:clean smallchat-client
+smallchat-client:$(TARGET_C)
+
+$(TARGET_C): $(OBJS_C)
+	$(CXX) $(OBJS_C) -o $@ $(LDFLAGS)
+
+.PHONY:clean all
+all: smallchat-server smallchat-client
+
+.PHONY:clean
+clean:
+	rm -f $(OBJS_S) $(OBJC_C) $(TARGET_S) $(TARGET_C)
+
+.PHONY:run_s
+run_s:$(TARGET_S)
+	./$(TARGET_S)
+
+.PHONY:run_c
+run_c:$(TARGET_C)
+	./$(TARGET_C)
