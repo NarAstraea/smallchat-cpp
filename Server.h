@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <boost/asio.hpp>
 #include "Client.h"
 #include "ChatState.h"
 #include "ChatlibEx.h"
@@ -22,10 +23,13 @@ class Server{
     int max_client_num = 0;
     int server_port = 0;
 
-    ThreadPool thread_pool;
+    boost::asio::io_context io_context;
+    std::unique_ptr<boost::asio::ip::tcp::acceptor> acceptor;
+    std::shared_ptr<ThreadPool> thread_pool;
     ChatlibEx Chatlib;
-    ChatState chat;
+    ChatState chats;
 
     public:
-    Client createClient(int _in_client_socket=0);
+    bool runServer(int _in_client_socket=0);
+    bool startAsyncTcpConnectHandler(boost::asio::io_context& io_context);
 };

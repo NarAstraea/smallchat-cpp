@@ -3,8 +3,11 @@
 
 int main(void){
     Server server = Server();
-    server.createClient();
+    server.runServer();
 
+    for(;;){
+        std::this_thread::sleep_for(std::chrono::milliseconds(20));
+    }
     system("pause");
     return 0;
 }

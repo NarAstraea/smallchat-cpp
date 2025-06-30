@@ -1,5 +1,6 @@
 CXX = g++
-CXXFLAGS = -O2 -Wall -Wextra -std=c++17
+MODE?= smallchat-server-dbg
+CXXFLAGS = -g -O0 -Wall -Wextra -std=c++17
 SRCDIR = .
 BUILDDIR = build
 TARGET_S = $(BUILDDIR)/smallchat-server

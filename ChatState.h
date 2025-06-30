@@ -2,6 +2,8 @@
 #include <iostream>
 #include <vector>
 #include <memory>
+#include <boost/asio.hpp>
+#include <optional>
 #include "Client.h"
 
 class ChatState{
@@ -15,5 +17,11 @@ class ChatState{
     int server_sock = 0;
     int client_current_num = 0;
     int client_populated = 0;
-    std::vector<std::unique_ptr<Client>> clients;
+    std::vector<Client> clients;
+
+    public:
+    bool createClient(boost::asio::io_context &_in_io_context,const std::string &_in_nikename);
+    std::optional<std::reference_wrapper<Client>> getClient(const int& _in_index=-1);
+    std::optional<std::reference_wrapper<Client>> getClient(const std::string &_in_nickname="");
+    std::optional<std::reference_wrapper<Client>> getClient(const int& _in_index=-1,const std::string &_in_nickname="");
 };
