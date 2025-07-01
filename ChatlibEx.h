@@ -15,6 +15,7 @@
 #include <thread>
 #include "ThreadPool.h"
 
+
 using boost::asio::ip::tcp;
 
 CHATLIB_API class ChatlibEx{
@@ -22,7 +23,11 @@ CHATLIB_API class ChatlibEx{
     explicit ChatlibEx();
     ~ChatlibEx();
 
+    struct MessageHeader{
+        uint16_t type;
+        uint16_t length;
+    };
 
-    int TCPConnect(boost::asio::io_context& io_context,std::unique_ptr<boost::asio::ip::tcp::acceptor> &acceptor,std::shared_ptr<ThreadPool>& _in_thread_pool);
-    bool chatService(std::shared_ptr<boost::asio::ip::tcp::socket> _in_socket);
+    int TCPConnect(boost::asio::io_context& io_context,std::unique_ptr<boost::asio::ip::tcp::acceptor> &acceptor,std::shared_ptr<ThreadPool>& _in_thread_pool,std::vector<const MessageHeader*>& _in_message_queue);
+    bool chatService(std::shared_ptr<boost::asio::ip::tcp::socket> _in_socket,std::vector<const MessageHeader*>& _in_message_queue);
 };

@@ -10,6 +10,7 @@ The Chat Server includes:
 - **boost Asio**
 - **Crypto++**
 - **MySQL**
+- **Protobuf**
 
 # Demo Client
 

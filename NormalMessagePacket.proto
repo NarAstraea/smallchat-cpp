@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+message NormalMessagePacket{
+    uint32 type = 1;
+    uint32 char_code = 2;
+    uint32 control_code = 3;
+    bytes content = 4;
+}

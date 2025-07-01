@@ -16,13 +16,13 @@ Server::~Server(){}
 
 bool Server::runServer(int _in_client_socket){
     std::string nickname;
-    std::cout<<"enter username:";
+    std::cout<<"Please enter username:";
     std::cin>>nickname;
 
     chats.createClient(io_context,nickname);
     chats.getClient(nickname);
 
-    Chatlib.TCPConnect(io_context,acceptor,thread_pool);
+    Chatlib.TCPConnect(io_context,acceptor,thread_pool,message_queue);
     startAsyncTcpConnectHandler(io_context);
     return 0;
 }

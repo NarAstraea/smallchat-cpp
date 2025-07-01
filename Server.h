@@ -1,10 +1,12 @@
 #pragma once
 #include <iostream>
 #include <boost/asio.hpp>
+#include <vector>
 #include "Client.h"
 #include "ChatState.h"
 #include "ChatlibEx.h"
 #include "ThreadPool.h"
+
 
 class Server{
     public:
@@ -28,8 +30,10 @@ class Server{
     std::shared_ptr<ThreadPool> thread_pool;
     ChatlibEx Chatlib;
     ChatState chats;
+    std::vector<const ChatlibEx::MessageHeader*> message_queue;
 
     public:
     bool runServer(int _in_client_socket=0);
     bool startAsyncTcpConnectHandler(boost::asio::io_context& io_context);
+    bool startAsyncMessageHandler();
 };
