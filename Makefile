@@ -48,7 +48,7 @@ all: smallchat-server smallchat-client
 
 .PHONY:clean
 clean:
-	rm -f $(OBJS_S) $(OBJC_C) $(TARGET_S) $(TARGET_C) $(PROTO_SRC) $(PROTO_HDR)
+	rm -f $(OBJS_S) $(OBJS_C) $(TARGET_S) $(TARGET_C)
 
 .PHONY:run_s
 run_s:$(TARGET_S)
